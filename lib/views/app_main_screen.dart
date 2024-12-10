@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipe_app/utils/constraints.dart';
+import 'package:recipe_app/views/my_app_home_screen.dart';
 class AppMainScreen extends StatefulWidget {
   const AppMainScreen({super.key});
 
@@ -14,7 +15,12 @@ class _AppMainScreenState extends State<AppMainScreen> {
   late final List<Widget> page;
   @override
   void initState() {
-
+    page = [
+     const MyAppHomeScreen(),
+      navBarPage(Iconsax.heart5),
+      navBarPage(Iconsax.calendar5),
+      navBarPage(Iconsax.setting_21),
+    ];
     super.initState();
   }
   @override
@@ -68,6 +74,7 @@ class _AppMainScreenState extends State<AppMainScreen> {
               label: "Setting",
             ),
           ]),
+      body: page[selectedIndex],
     );
   }
   navBarPage(iconName){
