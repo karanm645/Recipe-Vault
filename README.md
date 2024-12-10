@@ -92,7 +92,7 @@ Recipe Database:
 
 ## Getting Started
 ### Prerequisites
-1. Install Flutter: Flutter Installation Guide
+1. Install Flutter
 2. Set up a code editor (e.g., VS Code, Android Studio).
 3. Run the App
 4. Clone the repository:
