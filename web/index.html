@@ -31,8 +31,22 @@
 
   <title>recipe_app</title>
   <link rel="manifest" href="manifest.json">
+
 </head>
 <body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAWgRtuj_3vv9c9g6KiLfbzTvMgSFwGfx0",
+    authDomain: "recipe-app-be940.firebaseapp.com",
+    projectId: "recipe-app-be940",
+    storageBucket: "recipe-app-be940.firebasestorage.app",
+    messagingSenderId: "585027287959",
+    appId: "1:585027287959:web:9b2d3276b7b853124e62d2"
+  };
+  const app = initializeApp(firebaseConfig);
+</script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
