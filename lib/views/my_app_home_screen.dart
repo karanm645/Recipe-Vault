@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipe_app/utils/constraints.dart';
+import 'package:recipe_app/widgets/banner.dart';
 import 'package:recipe_app/widgets/my_icon_button.dart';
 
 class MyAppHomeScreen extends StatefulWidget {
@@ -20,7 +21,9 @@ class _MyAppHomeScreenState extends State<MyAppHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              mySearchBar()
+              mySearchBar(),
+              //banner
+              BannerToExplore(),
             ],
           ),
         ),
