@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipe_app/utils/constraints.dart';
 import 'package:recipe_app/widgets/banner.dart';
@@ -12,6 +15,8 @@ class MyAppHomeScreen extends StatefulWidget {
 }
 
 class _MyAppHomeScreenState extends State<MyAppHomeScreen> {
+  String category = "All";
+  final CollectionReference categoriesItems = FirebaseFirestore.instance.collection("App-Category");
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -21,6 +26,7 @@ class _MyAppHomeScreenState extends State<MyAppHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              headerParts(),
               mySearchBar(),
               //banner
               const BannerToExplore(),
@@ -36,6 +42,51 @@ class _MyAppHomeScreenState extends State<MyAppHomeScreen> {
                   ),
                 ),
               ),
+              // for category
+              StreamBuilder(stream: categoriesItems.snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot> streamSnapshot){
+                if(streamSnapshot.hasData){
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          streamSnapshot.data!.docs.length,
+                              (index) => GestureDetector(
+                                onTap: (){},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: category ==
+                                        streamSnapshot.data!.docs[index]
+                                        ["name"]
+                                        ? kprimaryColor:Colors.white,
+                                ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  margin: const EdgeInsets.only(right: 20),
+                                  child: Text(
+                                    streamSnapshot.data!.docs[index]["name"],
+                                    style: TextStyle(
+                                      color: category ==
+                                          streamSnapshot.data!.docs[index]
+                                          ["name"]
+                                          ? Colors.white
+                                          :Colors.grey.shade600,
+                                      fontWeight: FontWeight.w600,
+                                    )
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  );
+                }
+                // if snapshot has date, show the date...otherwise show progress bar
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+                  },
+              ),
             ],
           ),
         ),
@@ -45,11 +96,10 @@ class _MyAppHomeScreenState extends State<MyAppHomeScreen> {
 
   Padding mySearchBar() {
     return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    headerParts(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 22),
                       child: TextField(
